@@ -1,5 +1,6 @@
 #include "logger/Logger.h"
 #include "timer/Timer.h"
+#include <chrono>
 
 int main() {
     timer::Timer t1;
@@ -10,7 +11,7 @@ int main() {
             t1.resume();
         }
     }
-    Logger::Info(IMPLICIT, "Finished in:", t1.stop());
+    Logger::Info(EXPLICIT, "Finished in:", std::chrono::duration_cast<std::chrono::microseconds>(t1.stop()));
 
     return 0;
 }
