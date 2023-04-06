@@ -4,24 +4,24 @@
 #include <iostream>
 #include <iomanip>
 #include <cmath>
-#include "../../../include/benchmark/CPU/gaussLegendreCpu.h"
+#include "benchmark/cpu/gaussLegendreCPU.h"
 
-void gaussLegendreCpu::initialize(int numberOfDecimals) {
-    gaussLegendreCpu::noDecimals = numberOfDecimals;
+void gaussLegendreCPU::initialize(int numberOfDecimals) {
+    gaussLegendreCPU::noDecimals = numberOfDecimals;
 }
 
-void gaussLegendreCpu::warmup() {
-    gaussLegendreCpu::run(100);
+void gaussLegendreCPU::warmup() {
+    gaussLegendreCPU::run(100);
 }
 
-void gaussLegendreCpu::run(int noDigits) {
+void gaussLegendreCPU::run(int noDigits) {
     long double a = 1.0, b = 1.0 / sqrt(2.0), t = 1.0 / 4.0, p = 1.0;
     long double piPrev = 0.0, pi = 0.0;
 
     int iterations = ceil(log2(noDigits/14.6)); // Compute number of iterations needed
 
     for (int i = 0; i < iterations; ++i) {
-        if(gaussLegendreCpu::cancel){
+        if(gaussLegendreCPU::cancel){
             break; //if the cancel command is given we stop iterating
         }
         long double aNext = (a + b) / 2.0;
@@ -42,14 +42,14 @@ void gaussLegendreCpu::run(int noDigits) {
     }
 }
 
-void gaussLegendreCpu::run() {
+void gaussLegendreCPU::run() {
     long double a = 1.0, b = 1.0 / sqrt(2.0), t = 1.0 / 4.0, p = 1.0;
     long double piPrev = 0.0, pi = 0.0;
 
-    int iterations = ceil(log2(gaussLegendreCpu::noDecimals/14.6)); // Compute number of iterations needed
+    int iterations = ceil(log2(gaussLegendreCPU::noDecimals / 14.6)); // Compute number of iterations needed
 
     for (int i = 0; i < iterations; ++i) {
-        if(gaussLegendreCpu::cancel){
+        if(gaussLegendreCPU::cancel){
             break; //if the cancel command is given we stop iterating
         }
         long double aNext = (a + b) / 2.0;
@@ -70,10 +70,10 @@ void gaussLegendreCpu::run() {
     }
 }
 
-void gaussLegendreCpu::cancelBenchmark() {
-    gaussLegendreCpu::cancel = true;
+void gaussLegendreCPU::cancelBenchmark() {
+    gaussLegendreCPU::cancel = true;
 }
 
-void gaussLegendreCpu::getResult() {
+void gaussLegendreCPU::getResult() {
     //for now empty to be implemented when a gui is added
 }

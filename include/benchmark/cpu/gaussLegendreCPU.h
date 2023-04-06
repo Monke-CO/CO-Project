@@ -6,7 +6,7 @@
 #define CO_PROJECT_GAUSSLEGENDRECPU_H
 
 
-class gaussLegendreCpu {
+class gaussLegendreCPU {
 public:
         int noDecimals;
         int result;

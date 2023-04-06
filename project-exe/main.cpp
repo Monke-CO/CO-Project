@@ -1,12 +1,11 @@
 #include "logger/Logger.h"
 #include "timer/Timer.h"
-#include "CPU/gaussLegendreCpu.h"
-#include "../include/benchmark/CPU/gaussLegendreCpu.h"
+#include "benchmark/cpu/gaussLegendreCPU.h"
 
 int main() {
     timer::Timer t1;
     t1.start();
-    auto *cpu = new gaussLegendreCpu();
+    auto *cpu = new gaussLegendreCPU();
     cpu->initialize(1000);
     cpu->warmup();
     cpu->run();
