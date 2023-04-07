@@ -15,6 +15,7 @@ public:
         void warmup();
         void run();
         void run(int noDigits);
+        void runMultiThreaded(int noThreads);
         void cancelBenchmark();
         void getResult();
 };

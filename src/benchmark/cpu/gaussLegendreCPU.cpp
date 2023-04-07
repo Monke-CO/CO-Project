@@ -4,6 +4,8 @@
 #include <iostream>
 #include <iomanip>
 #include <cmath>
+#include <vector>
+#include <thread>
 #include "benchmark/cpu/gaussLegendreCPU.h"
 
 void gaussLegendreCPU::initialize(int numberOfDecimals) {
@@ -76,4 +78,19 @@ void gaussLegendreCPU::cancelBenchmark() {
 
 void gaussLegendreCPU::getResult() {
     //for now empty to be implemented when a gui is added
+}
+
+void gaussLegendreCPU::runMultiThreaded(int noThreads) {
+//created a vector that takes threads
+//started thread with emplace back
+//called a lambda function that captures all variables in the current scope by reference ("[&]")
+//and calls the run function
+
+    std::vector<std::thread> ThreadVector;
+    for(int i = 0 ; i < noThreads ; i++){
+        ThreadVector.emplace_back([&](){gaussLegendreCPU::run();});
+    }
+    for(auto &t : ThreadVector){
+        t.join();
+    }
 }
