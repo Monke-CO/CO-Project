@@ -13,8 +13,9 @@ public:
         bool cancel = false;
         void initialize(int numberOfDecimals);
         void warmup();
-        void run();
+        void runsinglethread();
         void run(int noDigits);
+        void runAbsolute(bool multithreading ,int noThreads);
         void runMultiThreaded(int noThreads);
         void cancelBenchmark();
         void getResult();

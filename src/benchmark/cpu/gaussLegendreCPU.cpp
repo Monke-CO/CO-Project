@@ -44,7 +44,7 @@ void gaussLegendreCPU::run(int noDigits) {
     }
 }
 
-void gaussLegendreCPU::run() {
+void gaussLegendreCPU::runsinglethread() {
     long double a = 1.0, b = 1.0 / sqrt(2.0), t = 1.0 / 4.0, p = 1.0;
     long double piPrev = 0.0, pi = 0.0;
 
@@ -88,9 +88,18 @@ void gaussLegendreCPU::runMultiThreaded(int noThreads) {
 
     std::vector<std::thread> ThreadVector;
     for(int i = 0 ; i < noThreads ; i++){
-        ThreadVector.emplace_back([&](){gaussLegendreCPU::run();});
+        ThreadVector.emplace_back([&](){gaussLegendreCPU::runsinglethread();});
     }
     for(auto &t : ThreadVector){
         t.join();
+    }
+}
+
+void gaussLegendreCPU::runAbsolute(bool multithreading, int noThreads) {
+    if (multithreading){
+        gaussLegendreCPU::runMultiThreaded(noThreads);
+    }
+    else{
+        gaussLegendreCPU::runsinglethread();
     }
 }
