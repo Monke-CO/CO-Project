@@ -57,6 +57,9 @@ public:
         *   from a separate thread to cancel the computation while it is running.
         */
         void cancelBenchmark();
+        /**
+         * not yet implemented
+         */
         void getResult();
 };
 
