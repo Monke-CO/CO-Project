@@ -44,7 +44,7 @@ void gaussLegendreCPU::run(int noDigits) {
     }
 }
 
-void gaussLegendreCPU::runsinglethread() {
+void gaussLegendreCPU::runSingleThread() {
     long double a = 1.0, b = 1.0 / sqrt(2.0), t = 1.0 / 4.0, p = 1.0;
     long double piPrev = 0.0, pi = 0.0;
 
