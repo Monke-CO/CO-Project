@@ -8,8 +8,8 @@
 
 class gaussLegendreCPU {
 public:
-        int noDecimals;
-        int result;
+        int noDecimals{};
+        int result{};
         bool cancel = false;
         /**
          * it acts as a setter function for the noDecimals variable that decides for how many digits of
