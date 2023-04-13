@@ -84,11 +84,12 @@ void gaussLegendreCPU::runMultiThreaded(int noThreads) {
     std::vector<std::thread> threads(noThreads);
 
     for (int t = 0; t < noThreads; ++t) {
-        threads[t] = std::thread([&](){
+        threads[t] = std::thread([&]() {
             long double a = 1.0, b = 1.0 / sqrt(2.0), t = 1.0 / 4.0, p = 1.0;
             long double piPrev = 0.0, pi = 0.0;
 
-            int iterations_per_thread = ceil(log2(gaussLegendreCPU::noDecimals / 14.6) / noThreads); // Compute number of iterations per thread
+            int iterations_per_thread = ceil(
+                    log2(gaussLegendreCPU::noDecimals / 14.6) / noThreads); // Compute number of iterations per thread
 
             int start_iteration = t * iterations_per_thread;
             int end_iteration = (t + 1) * iterations_per_thread;
@@ -118,6 +119,7 @@ void gaussLegendreCPU::runMultiThreaded(int noThreads) {
                 }
             }
         });
+    }
 }
 
 void gaussLegendreCPU::runAbsolute(bool multithreading, int noThreads) {
@@ -125,6 +127,6 @@ void gaussLegendreCPU::runAbsolute(bool multithreading, int noThreads) {
         gaussLegendreCPU::runMultiThreaded(noThreads);
     }
     else{
-        gaussLegendreCPU::runsinglethread();
+        gaussLegendreCPU::runSingleThread();
     }
 }
