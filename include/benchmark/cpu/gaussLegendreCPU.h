@@ -36,9 +36,9 @@ public:
         void run(int noDigits);
         /**
          * Acts as a switch between multithreading and single threaded operation. \n
-         * Uses the multithreading bool to decide if it uses multithreading or not
-         * @param multithreading
-         * @param noThreads
+         *
+         * @param multithreading Uses the multithreading bool to decide if it uses multithreading or not
+         * @param noThreads In the case that multithreading is used it decides how many threads will be created
          */
         void runAbsolute(bool multithreading ,int noThreads);
         /**
