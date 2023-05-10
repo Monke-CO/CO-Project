@@ -1,4 +1,4 @@
-add_executable(${PROJECT_NAME} main.cpp ../include/benchmark/IBenchmark.h)
+add_executable(${PROJECT_NAME} main.cpp)
 target_link_libraries(
         ${PROJECT_NAME}
         logger-lib
