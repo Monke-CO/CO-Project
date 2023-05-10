@@ -1,3 +1,3 @@
 add_subdirectory(logger)
 add_subdirectory(timer)
-add_subdirectory(benchmark/cpu)
+add_subdirectory(benchmark)

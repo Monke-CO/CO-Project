@@ -5,10 +5,10 @@
 int main() {
     timer::Timer t1;
     t1.start();
-    auto *cpu = new gaussLegendreCPU();
-    cpu->initialize(1000);
-    cpu->warmup();
-    cpu->run();
+    auto *cpu = new benchmark::cpu::gaussLegendreCPU();
+    cpu->setNoDecimals(100);
+    cpu->setNoThreads(16);
+    cpu->runAbsolute(true);
 
     Logger::Info(IMPLICIT, "Finished in:", t1.stop());
 

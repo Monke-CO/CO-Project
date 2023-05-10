@@ -1,37 +1,31 @@
 //
 // Created by marc on 4/6/23.
 //
+#pragma once
 
-#ifndef CO_PROJECT_GAUSSLEGENDRECPU_H
-#define CO_PROJECT_GAUSSLEGENDRECPU_H
+#include "benchmark/IBenchmark.h"
 
-namespace BenchMark {
-    namespace Cpu {
-        class gaussLegendreCPU {
-        public:
-            int noDecimals;
-            int result;
-            int noThreads;
-            bool cancel = false;
+namespace benchmark::cpu {
+    class gaussLegendreCPU : public IBenchmark {
+    private:
+        int noDecimals;
+        int result;
+        int noThreads;
+        bool running = true;
 
-            void initialize(int numberOfDecimals, int noThreads);
+    public:
 
-            void warmup();
+        void warmup() override;
+        void run() override;
+        void runAbsolute(bool multithreading);
+        void runMultiThreaded();
 
-            void runSingleThread();
+        void setNoThreads(int);
+        void setNoDecimals(int);
 
-            void run(int noDigits);
+        void cancel() override;
+        void cleanup() override;
 
-            void runAbsolute(bool multithreading);
-
-            void runMultiThreaded(int noThreads);
-
-            void cancelBenchmark();
-
-            void getResult();
-        };
-        //namespace cpu
-    }
-    //namespace benchmark
+        void getResult();
+    };
 }
-#endif //CO_PROJECT_GAUSSLEGENDRECPU_H
