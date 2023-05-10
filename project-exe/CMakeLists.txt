@@ -3,4 +3,5 @@ target_link_libraries(
         ${PROJECT_NAME}
         logger-lib
         timer-lib
+        cpu-lib
 )
