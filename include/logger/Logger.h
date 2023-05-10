@@ -51,11 +51,11 @@ private:
     }
 
     template <typename ...Args>
-    void log(LogType start, std::source_location location, LogPriority logPriority, Args ...args) {
+    void log(LogType logType, std::source_location location, LogPriority logPriority, Args ...args) {
         if (logPriority >= this->priority) {
             std::cout << "[" << enumString(logPriority) << "] ";
             std::scoped_lock lock(log_mutex);
-            if (start == EXPLICIT) {
+            if (logType == EXPLICIT) {
                 std::cout << "[File: " << location.file_name()
                           << ": line " << location.line() << " in function "
                           << location.function_name() << "] ";

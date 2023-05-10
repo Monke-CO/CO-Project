@@ -22,10 +22,6 @@ namespace timer {
         }
     }
 
-    /**
-     * Pauses the timer and sets the TimerState to PAUSED.
-     * @returns the time elapsed since the last start/resume of the timer in NANOSECONDS.
-     */
     std::chrono::nanoseconds Timer::pause() {
         if (this->timerState == RUNNING)
         {
