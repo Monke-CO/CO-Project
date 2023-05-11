@@ -10,6 +10,12 @@ namespace BenchMark {
                 this->cancel = cance;
             };
 
+            void fixedPointBenchmark::Warmup() {
+                ArrayAccessTest();
+                IntegerArithmeticTest();
+                BranchingTest();
+            }
+
             void fixedPointBenchmark::Run() {
                 ArrayAccessTest();
                 IntegerArithmeticTest();

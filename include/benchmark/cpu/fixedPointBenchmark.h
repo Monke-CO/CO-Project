@@ -14,6 +14,8 @@ namespace BenchMark {
         public:
             void Cancel(bool cance);
 
+            void Warmup();
+
             void Run();
 
             void SetSize(int siz);
