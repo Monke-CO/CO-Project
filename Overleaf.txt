@@ -1,0 +1,50 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+
+\title{CO-Project}
+\author{Bogdan Nicolcea, Cosmin Mihart, Marc Furtos, Alexandru Ionica, Razvan Liezenberg} 
+\date{May 2023}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+\subsection{What have we chosen}
+\begin{itemize}
+    \item \textbf{CPU:}
+    \subitem \textbf{Gauss Legendre: }The first benchmark we have to do is the CPU one, it is pretty common to test CPUs so that people can compare and see which one they might want to buy. For our benchmark we have chosen to do the GaussLegendre, which is an algorithm for computing the digits of pi, it is known to be very fast and with only 25 iterations it can produce 45 million correct digits.
+    \subitem \textbf{Fixed Point Benchmark: } The purpose of this algorithm is to perform a benchmarking test. The test includes the following 3 important functions to determine the performance of a CPU in a certain operations involving fixed point numbers: 
+    \subitem \textbf{1}: This one performs branching and looping tests.
+    \subitem \textbf{2}: The second one performs an integer arithmetic test in a loop.
+    \subitem \textbf{3}: The last one performs an array access test in a loop.
+    \item \textbf{HDD: }
+    
+\end{itemize}
+\subsection {Our Motivation}
+We chose this application because, as stated before, it's one of the fastest ways to compute millions of digits of pi, and for the benchmark that we want to create it is perfect to implement.
+\subsection{Comparison}
+\section{State of The Art}
+\section{Design and Implementation}
+In this chapter we will describe, briefly, how our algorithm works so that you do not have to go through hundreds of lines of code to find out. But of course if you do want to look at the whole code, since here we will only explain the most important parts, here is our github link where you can explore everything we did : https://github.com/Monke-CO/CO-Project
+\begin{itemize}
+    \item \textbf{Special and Important Features:}
+    \item \textbf{How our software libraries work:}
+    \end{itemize}
+    \section{Usage}
+    \begin{itemize}
+        \item \textbf{Everything About UI}
+        \item \textbf{Score}
+        
+    \end{itemize}
+
+\section{Results}
+\subsection{Comparing Results}
+\subsection{Interesting Results}
+\section{Conclusion}
+\subsection{What Have We Learned}
+\subsection{What Grade Would I Give Me?}
+\subsection{Hardships}
+\subsection{Changes For The Project Hours}
+
+\end{document}
