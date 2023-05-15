@@ -3,7 +3,7 @@
 #include <cassert>
 #include <cstddef>
 
-#include "bignum.h"
+#include "bignum/bignum.h"
 
 using ulimb_t = bignum::ulimb_t;
 using udlimb_t = bignum::udlimb_t;

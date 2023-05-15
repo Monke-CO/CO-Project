@@ -7,7 +7,7 @@
 #include <vector>
 #include <thread>
 #include "benchmark/cpu/gaussLegendreCPU.h"
-#include "Bignum/bignum.h"
+#include "bignum/bignum.h"
 
 //helper bignum sqrt function
 bignum findSqrt(bignum x)

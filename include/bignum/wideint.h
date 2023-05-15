@@ -10,8 +10,8 @@
 #include <algorithm>
 #include <initializer_list>
 
-#include "bits.h"
-#include "hostint.h"
+#include "bignum/bits.h"
+#include "bignum/hostint.h"
 
 /*------------------.
 | wideint.          |

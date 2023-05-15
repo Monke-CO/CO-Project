@@ -6,9 +6,9 @@ int main() {
     timer::Timer t1;
     t1.start();
     auto *cpu = new benchmark::cpu::gaussLegendreCPU();
-    cpu->setNoDecimals(100);
+    cpu->setNoDecimals(10000);
     cpu->setNoThreads(16);
-    cpu->runAbsolute(true);
+    cpu->runAbsolute(false);
 
     Logger::Info(IMPLICIT, "Finished in:", t1.stop());
 
