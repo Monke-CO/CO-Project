@@ -4,8 +4,7 @@
 
 #include "benchmark/cpu/fixedPointBenchmark.h"
 
-namespace BenchMark {
-    namespace Cpu {
+namespace BenchMark::Cpu {
             void fixedPointBenchmark::Cancel(bool cance) {
                 this->cancel = cance;
             };
@@ -84,6 +83,4 @@ namespace BenchMark {
             }
         //namespace cpu
     }
-    //namespace benchmark
-}
 

@@ -5,8 +5,7 @@
 #ifndef CO_PROJECT_FIXEDPOINTBENCHMARK_H
 #define CO_PROJECT_FIXEDPOINTBENCHMARK_H
 
-namespace BenchMark {
-    namespace Cpu {
+namespace BenchMark::Cpu {
         class fixedPointBenchmark {
         private:
             int size;
@@ -30,8 +29,6 @@ namespace BenchMark {
         };
         //namespace cpu
     }
-    //namespace benchmark
-}
 
 
 #endif //CO_PROJECT_FIXEDPOINTBENCHMARK_H
