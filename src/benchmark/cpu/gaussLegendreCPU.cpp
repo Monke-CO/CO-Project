@@ -7,6 +7,27 @@
 #include <vector>
 #include <thread>
 #include "benchmark/cpu/gaussLegendreCPU.h"
+#include "Bignum/bignum.h"
+
+//helper bignum sqrt function
+bignum findSqrt(bignum x)
+{
+    // for 0 and 1, the square roots are themselves
+    if (x < 2)
+        return x;
+
+    // considering the equation values
+    bignum y = x;
+    bignum z = (y + (x / y)) / 2;
+
+    // as we want to get upto 5 decimal digits, the absolute
+    // difference should not exceed 0.00001
+    while ((y - z) >= static_cast<const unsigned int>(0.000000000000000000000000000000000000000001)) {
+        y = z;
+        z = (y + (x / y)) / 2;
+    }
+    return z;
+}
 
 namespace benchmark::cpu {
     void gaussLegendreCPU::warmup() {
@@ -14,19 +35,20 @@ namespace benchmark::cpu {
     }
 
     void gaussLegendreCPU::run() {
-        long double a = 1.0, b = 1.0 / sqrt(2.0), t = 1.0 / 4.0, p = 1.0;
-        long double piPrev = 0.0, pi = 0.0;
-
+        bignum a = 1.0, b = 1.0 / sqrt(2.0), t = 1.0 / 4.0, p = 1.0;
+        bignum piPrev = 0.0, pi = 0.0;
+        bignum doi = 2;
         int iterations = ceil(log2(this->noDecimals / 14.6)); // Compute number of iterations needed
 
         for (int i = 0; i < iterations; ++i) {
             if (!this->running) {
                 break; //if the cancel command is given we stop iterating
             }
-            long double aNext = (a + b) / 2.0;
-            long double bNext = sqrt(a * b);
-            long double tNext = t - p * pow(a - aNext, 2.0);
-            long double pNext = 2.0 * p;
+            bignum aNext = (a + b) / 2.0;
+            bignum bNext = findSqrt(a * b);
+            bignum j = a-aNext;
+            bignum tNext = t - p * (j.pow(2.0));
+            bignum pNext = doi * p;
 
             a = aNext;
             b = bNext;
@@ -34,7 +56,8 @@ namespace benchmark::cpu {
             p = pNext;
 
             piPrev = pi;
-            pi = pow(a + b, 2.0) / (4.0 * t);
+            bignum z = a+b , four = 4;
+            pi = z.pow(2.0) / (four * t);
             if (pi == piPrev) {
                 break; // Stop iterating if no change in pi
             }
