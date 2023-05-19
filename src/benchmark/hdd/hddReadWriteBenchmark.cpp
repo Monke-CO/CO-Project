@@ -40,6 +40,15 @@ namespace Benchmark{
 
         void HDDWriteSpeedBenchmark::clean() {
             // Clean temp files here
+            std::string prefix = "~/cotestlab";
+            std::string suffix = ".dat";
+            int minIndex = 0;
+            int maxIndex = 8;
+            for (int i = minIndex; i <= maxIndex; ++i) {
+                std::string filename = prefix + std::to_string(i) + suffix;
+                std::remove(filename.c_str());
+            }
+
         }
 
         void HDDWriteSpeedBenchmark::cancel() {
