@@ -10,13 +10,13 @@ namespace BenchMark::Cpu {
             };
 
             void fixedPointBenchmark::Warmup() {
-                ArrayAccessTest();
+//                ArrayAccessTest();
                 IntegerArithmeticTest();
                 BranchingTest();
             }
 
             void fixedPointBenchmark::Run() {
-                ArrayAccessTest();
+//                ArrayAccessTest();
                 IntegerArithmeticTest();
                 BranchingTest();
             }
@@ -29,6 +29,10 @@ namespace BenchMark::Cpu {
                 int a[size];
                 int b[size];
                 int c[size];
+                for (int i = 0; i < size; i++) {
+                    a[i] = i+i+i;
+                    b[i] = i;
+                }
 
                 for (int i = 0; i < size; i++) {
                     if(cancel){
