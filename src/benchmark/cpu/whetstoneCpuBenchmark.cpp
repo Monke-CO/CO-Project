@@ -81,13 +81,12 @@ namespace benchmark::cpu{
         }
     }
 
-    void whetstoneCpuBenchmark::initialize(int itterations ,int nrThreads){
+    void whetstoneCpuBenchmark::initialize(int itterations){
         this->itterations = itterations;
         this->x = 237.236;
         this->y = 298.976;
         this->z = 353.235;
         this->cancel = false;
-        this->nrThreads =nrThreads;
     }
 
     void whetstoneCpuBenchmark::warmup(){
@@ -102,5 +101,9 @@ namespace benchmark::cpu{
 
     double whetstoneCpuBenchmark::getResult(){
         return this->result;
+    }
+
+    void whetstoneCpuBenchmark::setNrThreads(int nrThreads) {
+        this->nrThreads = nrThreads;
     }
 }

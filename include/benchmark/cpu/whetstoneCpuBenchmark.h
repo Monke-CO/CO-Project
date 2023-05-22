@@ -28,7 +28,11 @@ namespace benchmark::cpu {
 
             void runMultiThreaded();
 
-            void initialize(int itterations,int nrThreads);
+            void runAbsolute(bool multiThreading);
+
+            void initialize(int itterations);
+
+            void setNrThreads(int nrThreads);
 
             void warmup();
 
