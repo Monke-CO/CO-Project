@@ -10,13 +10,13 @@ namespace BenchMark::Cpu {
             };
 
             void fixedPointBenchmark::Warmup() {
-                ArrayAccessTest();
+//                ArrayAccessTest();
                 IntegerArithmeticTest();
                 BranchingTest();
             }
 
             void fixedPointBenchmark::Run() {
-                ArrayAccessTest();
+//                ArrayAccessTest();
                 IntegerArithmeticTest();
                 BranchingTest();
             }
