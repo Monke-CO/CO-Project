@@ -4,7 +4,7 @@
 #include "benchmark/hdd/FileWriter.h"
 #include "benchmark/hdd/hddReadWriteBenchmark.h"
 
-namespace Benchmark{
+namespace benchmark{
     namespace hdd{
 
         void HDDWriteSpeedBenchmark::initialize() {
@@ -19,11 +19,11 @@ namespace Benchmark{
 
         void HDDWriteSpeedBenchmark::run(const std::string& option, bool clean) {
             FileWriter writer;
-            std::string prefix = "~/cotestlab";
+            std::string prefix = "data-files/cotestlab";
             std::string suffix = ".dat";
             int minIndex = 0;
             int maxIndex = 8;
-            long fileSize = 1024 * 1024 * 256; // 256, 512 MB, 1GB
+            long fileSize = 1024 * 1024 * 1024; // 256, 512 MB, 1GB
             int bufferSize = 1024 * 4; // 4 KB
 
             try {

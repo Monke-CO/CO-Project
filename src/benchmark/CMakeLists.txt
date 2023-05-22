@@ -1,1 +1,2 @@
-add_subdirectory(cpu hdd)
+add_subdirectory(cpu)
+add_subdirectory(hdd)

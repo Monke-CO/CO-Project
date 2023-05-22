@@ -9,7 +9,7 @@
 #include <fstream>
 
 
-namespace Benchmark{
+namespace benchmark{
     namespace hdd{
         class HDDWriteSpeedBenchmark {
         public:

@@ -10,7 +10,7 @@
 #include <iomanip>
 #include <filesystem>
 
-namespace Benchmark {
+namespace benchmark {
     namespace hdd {
         const int FileWriter::MIN_BUFFER_SIZE = 1024 * 1; // KB
         const int FileWriter::MAX_BUFFER_SIZE = 1024 * 1024 * 32; // MB
@@ -39,7 +39,7 @@ namespace Benchmark {
             while (currentBufferSize <= MAX_BUFFER_SIZE && fileIndex <= maxIndex - minIndex) {
                 fileName = filePrefix + std::to_string(fileIndex) + fileSuffix;
                 writeFile(fileName, currentBufferSize, fileSize, clean);
-                currentBufferSize *= 2;
+                currentBufferSize *= 4;
                 fileIndex++;
             }
 

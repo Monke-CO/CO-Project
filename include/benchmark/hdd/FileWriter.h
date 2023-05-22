@@ -12,7 +12,7 @@
 #include <iomanip>
 #include <string>
 
-namespace Benchmark {
+namespace benchmark {
     namespace hdd {
         class Timing {
             std::chrono::high_resolution_clock::time_point start_time;

@@ -4,4 +4,5 @@ target_link_libraries(
         logger-lib
         timer-lib
         cpu-lib
+        hdd-lib
 )

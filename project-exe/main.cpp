@@ -1,16 +1,14 @@
 #include "logger/Logger.h"
 #include "timer/Timer.h"
-#include "benchmark/cpu/gaussLegendreCPU.h"
+#include "benchmark/hdd/hddReadWriteBenchmark.h"
 
 int main() {
     timer::Timer t1;
-    t1.start();
-    auto *cpu = new benchmark::cpu::gaussLegendreCPU();
-    cpu->setNoDecimals(100);
-    cpu->setNoThreads(16);
-    cpu->runAbsolute(true);
+    auto *hdd = new benchmark::hdd::HDDWriteSpeedBenchmark;
 
-    Logger::Info(IMPLICIT, "Finished in:", t1.stop());
+    t1.start();
+    hdd->run("fs", false);
+    Logger::Info(IMPLICIT, "Finished in:", std::chrono::duration_cast<std::chrono::seconds>(t1.stop()));
 
     return 0;
 }
