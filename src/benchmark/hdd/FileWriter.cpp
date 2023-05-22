@@ -13,9 +13,9 @@
 namespace benchmark {
     namespace hdd {
         const int FileWriter::MIN_BUFFER_SIZE = 1024 * 1; // KB
-        const int FileWriter::MAX_BUFFER_SIZE = 1024 * 1024 * 32; // MB
+        const int FileWriter::MAX_BUFFER_SIZE = 1024 * 1024 * 1; // MB
         const long FileWriter::MIN_FILE_SIZE = 1024 * 1024 * 1; // MB
-        const long FileWriter::MAX_FILE_SIZE = 1024 * 1024 * 512; // MB
+        const long FileWriter::MAX_FILE_SIZE = 1024 * 1024 * 1024; // MB
 
         void Timing::start() {
             start_time = std::chrono::high_resolution_clock::now();
@@ -29,17 +29,17 @@ namespace benchmark {
         FileWriter::FileWriter() : rand_engine(rd()) {}
 
         void FileWriter::streamWriteFixedFileSize(const std::string& filePrefix, const std::string& fileSuffix,
-                                                  int minIndex, int maxIndex, long fileSize, bool clean) {
+                                                  int minIndex, int maxIndex, long fileSize) {
             std::cout << "Stream write benchmark with fixed file size\n";
             int currentBufferSize = MIN_BUFFER_SIZE;
             std::string fileName;
             int fileIndex = 0;
             benchScore = 0;
 
-            while (currentBufferSize <= MAX_BUFFER_SIZE && fileIndex <= maxIndex - minIndex) {
+            while (fileIndex <= maxIndex - minIndex) {
                 fileName = filePrefix + std::to_string(fileIndex) + fileSuffix;
-                writeFile(fileName, currentBufferSize, fileSize, clean);
-                currentBufferSize *= 4;
+                writeFile(fileName, currentBufferSize, fileSize);
+                currentBufferSize *= 2;
                 fileIndex++;
             }
 
@@ -51,13 +51,13 @@ namespace benchmark {
         }
 
         void FileWriter::streamWriteFixedBufferSize(const std::string& filePrefix, const std::string& fileSuffix,
-                                                    int minIndex, int maxIndex, int bufferSize, bool clean) {
+                                                    int minIndex, int maxIndex, int bufferSize) {
             std::cout << "Stream write benchmark with fixed buffer size\n";
             long currentFileSize = MIN_FILE_SIZE;
             int fileIndex = minIndex;
 
             while (currentFileSize <= MAX_FILE_SIZE && fileIndex <= maxIndex - minIndex) {
-                writeFile(filePrefix + std::to_string(fileIndex) + fileSuffix, bufferSize, currentFileSize, clean);
+                writeFile(filePrefix + std::to_string(fileIndex) + fileSuffix, bufferSize, currentFileSize);
                 currentFileSize *= 2;
                 fileIndex++;
             }
@@ -67,7 +67,7 @@ namespace benchmark {
                       << std::fixed << std::setprecision(2) << benchScore << " MB/sec\n";
         }
 
-        void FileWriter::writeFile(const std::string& fileName, int bufferSize, long fileSize, bool clean) {
+        void FileWriter::writeFile(const std::string& fileName, int bufferSize, long fileSize) {
             std::filesystem::path folderPath = std::filesystem::path(fileName).parent_path();
 
             // create folder path to benchmark output
@@ -91,9 +91,7 @@ namespace benchmark {
             printStats(fileName, fileSize, bufferSize);
 
             outputStream.close();
-            if (clean) {
-                std::filesystem::remove(fileName);
-            }
+            std::filesystem::remove(fileName);
         }
 
         void FileWriter::printStats(const std::string& fileName, long totalBytes, int bufferSize) {

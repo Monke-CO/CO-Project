@@ -1,32 +1,21 @@
-//
-// Created by marc on 5/15/23.
-//
-
-#ifndef CO_PROJECT_HDDREADWRITEBENCHMARK_H
-#define CO_PROJECT_HDDREADWRITEBENCHMARK_H
+#pragma once
 
 #include <iostream>
 #include <fstream>
+#include "benchmark/IBenchmark.h"
 
 
-namespace benchmark{
-    namespace hdd{
-        class HDDWriteSpeedBenchmark {
+namespace benchmark::hdd{
+    class HDDWriteSpeedBenchmark: public benchmark::IBenchmark{
         public:
-            void initialize();
+            void warmup() override;
 
-            void warmUp();
+            void run() override;
 
-            void run();
+            void run(const std::string& option);
 
-            void run(const std::string& option, bool clean);
+            void cleanup() override;
 
-            void clean();
-
-            void cancel();
-
-            std::string getResult();
+            void cancel() override;
         };
     }
-}
-#endif //CO_PROJECT_HDDREADWRITEBENCHMARK_H

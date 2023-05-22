@@ -7,30 +7,24 @@
 namespace benchmark{
     namespace hdd{
 
-        void HDDWriteSpeedBenchmark::initialize() {
-        }
-
-        void HDDWriteSpeedBenchmark::warmUp() {
-        }
-
         void HDDWriteSpeedBenchmark::run() {
             throw std::runtime_error("Method not implemented. Use run(Object) instead");
         }
 
-        void HDDWriteSpeedBenchmark::run(const std::string& option, bool clean) {
+        void HDDWriteSpeedBenchmark::run(const std::string& option) {
             FileWriter writer;
-            std::string prefix = "data-files/cotestlab";
+            std::string prefix = "data-files/data";
             std::string suffix = ".dat";
             int minIndex = 0;
             int maxIndex = 8;
             long fileSize = 1024 * 1024 * 1024; // 256, 512 MB, 1GB
-            int bufferSize = 1024 * 4; // 4 KB
+            int bufferSize = 1024 * 1; // 4 KB
 
             try {
                 if (option == "fs")
-                    writer.streamWriteFixedFileSize(prefix, suffix, minIndex, maxIndex, fileSize, clean);
+                    writer.streamWriteFixedFileSize(prefix, suffix, minIndex, maxIndex, fileSize);
                 else if (option == "fb")
-                    writer.streamWriteFixedBufferSize(prefix, suffix, minIndex, maxIndex, bufferSize, clean);
+                    writer.streamWriteFixedBufferSize(prefix, suffix, minIndex, maxIndex, bufferSize);
                 else
                     throw std::invalid_argument("Argument " + option + " is undefined");
             } catch (std::exception& e) {
@@ -38,9 +32,9 @@ namespace benchmark{
             }
         }
 
-        void HDDWriteSpeedBenchmark::clean() {
+        void HDDWriteSpeedBenchmark::cleanup() {
             // Clean temp files here
-            std::string prefix = "~/cotestlab";
+            std::string prefix = "data-files/data";
             std::string suffix = ".dat";
             int minIndex = 0;
             int maxIndex = 8;
@@ -55,8 +49,8 @@ namespace benchmark{
 
         }
 
-        std::string HDDWriteSpeedBenchmark::getResult() {
-            return ""; // or MBps
+        void HDDWriteSpeedBenchmark::warmup() {
+
         }
     }
 }
