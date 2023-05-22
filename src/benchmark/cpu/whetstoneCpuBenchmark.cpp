@@ -6,6 +6,7 @@
 #include <cmath>
 #include <thread>
 #include <vector>
+#include <mutex>
 
 
 namespace benchmark::cpu{
@@ -69,6 +70,7 @@ namespace benchmark::cpu{
                 }
 
                 // Accumulate the thread result to the shared result
+                std::lock_guard<std::mutex> lock(resultMutex);
                 result += threadResult;
             });
         }
@@ -78,6 +80,15 @@ namespace benchmark::cpu{
         {
             if (thread.joinable())
                 thread.join();
+        }
+    }
+
+    void whetstoneCpuBenchmark::runAbsolute(bool multiThreading) {
+        if(multiThreading){
+            runMultiThreaded();
+        }
+        else{
+            run();
         }
     }
 

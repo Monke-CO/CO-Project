@@ -5,6 +5,8 @@
 #ifndef CO_PROJECT_WHETSTONECPUBENCHMARK_H
 #define CO_PROJECT_WHETSTONECPUBENCHMARK_H
 #include <cmath>
+#include <mutex>
+
 namespace benchmark::cpu {
         class whetstoneCpuBenchmark {
         private:
@@ -12,6 +14,7 @@ namespace benchmark::cpu {
             double x, y, z;
             bool cancel;
             double result;
+            std::mutex resultMutex;
             int nrThreads;
             bool multiThreading;
 
