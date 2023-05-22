@@ -4,6 +4,8 @@
 
 #include "benchmark/cpu/whetstoneCpuBenchmark.h"
 #include <cmath>
+#include <thread>
+#include <vector>
 
 
 namespace benchmark::cpu{
@@ -38,12 +40,54 @@ namespace benchmark::cpu{
         }
     }
 
-    void whetstoneCpuBenchmark::initialize(int itterations){
+    void whetstoneCpuBenchmark::runMultiThreaded() {
+        // Vector to store the threads
+        std::vector<std::thread> threads;
+
+        // Calculate the workload for each thread
+        int workload = itterations / nrThreads;
+        int remainingWorkload = itterations % nrThreads;
+
+        // Launch the threads
+        for (int i = 0; i < nrThreads; ++i)
+        {
+            int start = i * workload;
+            int end = start + workload;
+
+            // Distribute remaining workload evenly among threads
+            if (i == nrThreads - 1)
+                end += remainingWorkload;
+
+            threads[i] = std::thread([&]() {
+                double threadResult = 0.0;
+                for (int i = start; i < end; ++i)
+                {
+                    threadResult += procedure1(x, y, z);
+                    threadResult += procedure2(x, y, z);
+                    threadResult += procedure3(x, y, z);
+                    threadResult += procedure4(x, y, z);
+                }
+
+                // Accumulate the thread result to the shared result
+                result += threadResult;
+            });
+        }
+
+        // Wait for all threads to finish
+        for (auto& thread : threads)
+        {
+            if (thread.joinable())
+                thread.join();
+        }
+    }
+
+    void whetstoneCpuBenchmark::initialize(int itterations ,int nrThreads){
         this->itterations = itterations;
         this->x = 237.236;
         this->y = 298.976;
         this->z = 353.235;
         this->cancel = false;
+        this->nrThreads =nrThreads;
     }
 
     void whetstoneCpuBenchmark::warmup(){

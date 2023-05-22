@@ -12,6 +12,9 @@ namespace benchmark::cpu {
             double x, y, z;
             bool cancel;
             double result;
+            int nrThreads;
+            bool multiThreading;
+
         public:
             double procedure1(double x, double y, double z);
 
@@ -23,7 +26,9 @@ namespace benchmark::cpu {
 
             void run();
 
-            void initialize(int itterations);
+            void runMultiThreaded();
+
+            void initialize(int itterations,int nrThreads);
 
             void warmup();
 
