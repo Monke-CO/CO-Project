@@ -1,56 +1,57 @@
-//
-// Created by marc on 5/15/23.
-//
 #include "benchmark/hdd/FileWriter.h"
 #include "benchmark/hdd/hddReadWriteBenchmark.h"
 
-namespace benchmark{
-    namespace hdd{
+namespace benchmark::hdd{
+    void HDDWriteSpeedBenchmark::run() {
+        throw std::runtime_error("Method not implemented. Use run(Object) instead");
+    }
 
-        void HDDWriteSpeedBenchmark::run() {
-            throw std::runtime_error("Method not implemented. Use run(Object) instead");
+    void HDDWriteSpeedBenchmark::run(const std::string& option) {
+        FileWriter writer;
+        long fileSize = 1024 * 1024 * 1024; // 256, 512 MB, 1GB
+        int bufferSize = 1024 * 4; // 4 KB
+
+        try {
+            if (option == "fs")
+                writer.streamWriteFixedFileSize(this->prefix, this->suffix, this->minIndex, this->maxIndex, fileSize);
+            else if (option == "fb")
+                writer.streamWriteFixedBufferSize(this->prefix, this->suffix, this->minIndex, this->maxIndex, bufferSize);
+            else
+                throw std::invalid_argument("Argument " + option + " is undefined");
+        } catch (std::exception& e) {
+            std::cerr << e.what() << std::endl;
+        }
+    }
+
+    void HDDWriteSpeedBenchmark::cleanup() {
+        for (int i = minIndex; i <= maxIndex; ++i) {
+            std::string filename = this->prefix + std::to_string(i) + this->suffix;
+            std::remove(filename.c_str());
         }
 
-        void HDDWriteSpeedBenchmark::run(const std::string& option) {
-            FileWriter writer;
-            std::string prefix = "data-files/data";
-            std::string suffix = ".dat";
-            int minIndex = 0;
-            int maxIndex = 8;
-            long fileSize = 1024 * 1024 * 1024; // 256, 512 MB, 1GB
-            int bufferSize = 1024 * 1; // 4 KB
+    }
 
-            try {
-                if (option == "fs")
-                    writer.streamWriteFixedFileSize(prefix, suffix, minIndex, maxIndex, fileSize);
-                else if (option == "fb")
-                    writer.streamWriteFixedBufferSize(prefix, suffix, minIndex, maxIndex, bufferSize);
-                else
-                    throw std::invalid_argument("Argument " + option + " is undefined");
-            } catch (std::exception& e) {
-                std::cerr << e.what() << std::endl;
-            }
-        }
+    void HDDWriteSpeedBenchmark::cancel() {
 
-        void HDDWriteSpeedBenchmark::cleanup() {
-            // Clean temp files here
-            std::string prefix = "data-files/data";
-            std::string suffix = ".dat";
-            int minIndex = 0;
-            int maxIndex = 8;
-            for (int i = minIndex; i <= maxIndex; ++i) {
-                std::string filename = prefix + std::to_string(i) + suffix;
-                std::remove(filename.c_str());
-            }
+    }
 
-        }
+    void HDDWriteSpeedBenchmark::warmup() {
 
-        void HDDWriteSpeedBenchmark::cancel() {
+    }
 
-        }
+    void HDDWriteSpeedBenchmark::setMinIndex(int value) {
+        this->minIndex = value;
+    }
 
-        void HDDWriteSpeedBenchmark::warmup() {
+    void HDDWriteSpeedBenchmark::setMaxIndex(int value) {
+        this->maxIndex = value;
+    }
 
-        }
+    void HDDWriteSpeedBenchmark::setPrefix(std::string value) {
+        this->prefix = value;
+    }
+
+    void HDDWriteSpeedBenchmark::setSuffix(std::string value) {
+        this->suffix = value;
     }
 }

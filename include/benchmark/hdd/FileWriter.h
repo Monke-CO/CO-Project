@@ -31,16 +31,16 @@ namespace benchmark {
         public:
             FileWriter();
 
-            void streamWriteFixedFileSize(const std::string &filePrefix, const std::string &fileSuffix,
+            void streamWriteFixedFileSize(const std::string filePrefix, const std::string fileSuffix,
                                           int minIndex, int maxIndex, long fileSize);
 
-            void streamWriteFixedBufferSize(const std::string &filePrefix, const std::string &fileSuffix,
+            void streamWriteFixedBufferSize(const std::string filePrefix, const std::string fileSuffix,
                                             int minIndex, int maxIndex, int bufferSize);
 
         private:
-            void writeFile(const std::string &fileName, int bufferSize, long fileSize);
+            void writeFile(const std::string fileName, int bufferSize, long fileSize);
 
-            void printStats(const std::string &fileName, long totalBytes, int bufferSize);
+            void printStats(const std::string fileName, long totalBytes, int bufferSize);
         };
     }
 }

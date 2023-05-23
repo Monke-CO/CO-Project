@@ -9,6 +9,7 @@
 #include <chrono>
 #include <iomanip>
 #include <filesystem>
+#include "logger/Logger.h"
 
 namespace benchmark {
     namespace hdd {
@@ -28,15 +29,15 @@ namespace benchmark {
 
         FileWriter::FileWriter() : rand_engine(rd()) {}
 
-        void FileWriter::streamWriteFixedFileSize(const std::string& filePrefix, const std::string& fileSuffix,
+        void FileWriter::streamWriteFixedFileSize(const std::string filePrefix, const std::string fileSuffix,
                                                   int minIndex, int maxIndex, long fileSize) {
             std::cout << "Stream write benchmark with fixed file size\n";
             int currentBufferSize = MIN_BUFFER_SIZE;
             std::string fileName;
-            int fileIndex = 0;
+            int fileIndex = minIndex;
             benchScore = 0;
 
-            while (fileIndex <= maxIndex - minIndex) {
+            while (fileIndex <= maxIndex) {
                 fileName = filePrefix + std::to_string(fileIndex) + fileSuffix;
                 writeFile(fileName, currentBufferSize, fileSize);
                 currentBufferSize *= 2;
@@ -50,13 +51,13 @@ namespace benchmark {
                       << std::fixed << std::setprecision(2) << benchScore << " MB/sec\n";
         }
 
-        void FileWriter::streamWriteFixedBufferSize(const std::string& filePrefix, const std::string& fileSuffix,
+        void FileWriter::streamWriteFixedBufferSize(const std::string filePrefix, const std::string fileSuffix,
                                                     int minIndex, int maxIndex, int bufferSize) {
             std::cout << "Stream write benchmark with fixed buffer size\n";
             long currentFileSize = MIN_FILE_SIZE;
             int fileIndex = minIndex;
 
-            while (currentFileSize <= MAX_FILE_SIZE && fileIndex <= maxIndex - minIndex) {
+            while (fileIndex <= maxIndex) {
                 writeFile(filePrefix + std::to_string(fileIndex) + fileSuffix, bufferSize, currentFileSize);
                 currentFileSize *= 2;
                 fileIndex++;
@@ -67,7 +68,7 @@ namespace benchmark {
                       << std::fixed << std::setprecision(2) << benchScore << " MB/sec\n";
         }
 
-        void FileWriter::writeFile(const std::string& fileName, int bufferSize, long fileSize) {
+        void FileWriter::writeFile(const std::string fileName, int bufferSize, long fileSize) {
             std::filesystem::path folderPath = std::filesystem::path(fileName).parent_path();
 
             // create folder path to benchmark output
@@ -94,7 +95,7 @@ namespace benchmark {
             std::filesystem::remove(fileName);
         }
 
-        void FileWriter::printStats(const std::string& fileName, long totalBytes, int bufferSize) {
+        void FileWriter::printStats(const std::string fileName, long totalBytes, int bufferSize) {
             const long long time = timer.stop();
 
             double seconds = static_cast<double>(time) / 1000.0;

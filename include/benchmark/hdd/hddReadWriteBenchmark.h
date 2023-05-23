@@ -7,15 +7,25 @@
 
 namespace benchmark::hdd{
     class HDDWriteSpeedBenchmark: public benchmark::IBenchmark{
-        public:
-            void warmup() override;
+    private:
+        int minIndex;
+        int maxIndex;
+        std::string prefix;
+        std::string suffix;
+    public:
+        void warmup() override;
 
-            void run() override;
+        void run() override;
 
-            void run(const std::string& option);
+        void run(const std::string& option);
 
-            void cleanup() override;
+        void cleanup() override;
 
-            void cancel() override;
-        };
-    }
+        void cancel() override;
+
+        void setMinIndex(int minIndex);
+        void setMaxIndex(int maxIndex);
+        void setPrefix(std::string prefix);
+        void setSuffix(std::string suffix);
+    };
+}
