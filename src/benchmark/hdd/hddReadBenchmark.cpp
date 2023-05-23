@@ -5,7 +5,7 @@
 #include "benchmark/hdd/hddReadBenchmark.h"
 namespace Bench::HDD{
     void hddReadBenchmark::initialize() {
-
+//        this->fileSize = static_cast<std::streampos>(this->fileSize * 1024 * 1024);
         std::ofstream file(filename, std::ios::binary | std::ios::out);
         if (!file) {
             std::cerr << "Failed to create file: " << filename << std::endl;
@@ -16,12 +16,22 @@ namespace Bench::HDD{
         std::mt19937 gen(rd());
         std::uniform_int_distribution<> dis(0, 255);
 
-        std::streampos i = 0;
-        while (i < this->fileSize) {
-            char randomChar = static_cast<char>(dis(gen));
-            file.write(&randomChar, sizeof(char));
-            i += sizeof(char);
+        double i = 0.0;
+
+        char buffer[this->bufferSize];
+        long long bytesRemaining = fileSize;
+
+        while (bytesRemaining > 0) {
+            int bytesToWrite = std::min(static_cast<long long>(this->bufferSize), bytesRemaining);
+
+            for (int i = 0; i < bytesToWrite; ++i) {
+                buffer[i] = static_cast<char>(dis(gen));
+            }
+
+            file.write(buffer, bytesToWrite);
+            bytesRemaining -= bytesToWrite;
         }
+
 
         file.close();
     }
@@ -42,19 +52,23 @@ namespace Bench::HDD{
 
         auto startTime = std::chrono::high_resolution_clock::now();
 
-        while (file.read(buffer, bufferSize)) {
-            if (cancel){
-                break;
-            }
+        while (!cancel && !file.eof()) {
+            file.read(buffer, bufferSize);
             // Reading in progress...
         }
 
         auto endTime = std::chrono::high_resolution_clock::now();
-        auto duration = std::chrono::duration_cast<std::chrono::nanoseconds >(endTime - startTime).count();
+        double duration = std::chrono::duration_cast<std::chrono::milliseconds >(endTime - startTime).count();
 
 //        fileSize = file.tellg();
-        long readSpeed = (this->fileSize/1024) / (duration);
-
+        std::cout<< duration/1000;
+        double readSpeed = 0;
+        if (duration/1000 >1) {
+            readSpeed = static_cast<double > (this->fileSize) / (duration / 1000) / (1024 * 1024);
+        }
+        else{
+            readSpeed = (static_cast<double > (this->fileSize)*10) / (duration/ 100) / (1024 * 1024);
+        }
         std::cout << "Read speed: " << readSpeed << " MB/s" << std::endl;
 
         file.close();
@@ -63,8 +77,8 @@ namespace Bench::HDD{
         std::remove(filename.c_str()); // Delete the file
     }
 
-    void hddReadBenchmark::setFileSize(const std::streampos &fileSize) {
-        hddReadBenchmark::fileSize = fileSize;
+    void hddReadBenchmark::setFileSize(const std::streampos &fileSiz) {
+        hddReadBenchmark::fileSize = fileSiz;
     }
 
     void hddReadBenchmark::Cancel() {
@@ -75,7 +89,7 @@ namespace Bench::HDD{
         return result;
     }
 
-    void hddReadBenchmark::setBufferSize(int bufferSize) {
-        hddReadBenchmark::bufferSize = bufferSize;
+    void hddReadBenchmark::setBufferSize(int bufferSiz) {
+        hddReadBenchmark::bufferSize = bufferSiz;
     }
 }

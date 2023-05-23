@@ -7,9 +7,9 @@ int main() {
     timer::Timer t1;
     auto *hdd = new Bench::HDD::hddReadBenchmark;
     t1.start();
+    hdd->setFileSize(1024LL*1024LL*1024LL * 4);
+    hdd->setBufferSize(4026);
     hdd->initialize();
-    hdd->setFileSize(INT32_MAX);
-    hdd->setBufferSize(100);
 //    hdd->warmup();
     hdd->run();
 

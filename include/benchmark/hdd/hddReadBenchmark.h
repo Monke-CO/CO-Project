@@ -29,11 +29,11 @@ namespace Bench::HDD {
 
             void Cancel();
 
-            void setBufferSize(int bufferSize);
+            void setBufferSize(int bufferSiz);
 
             double getResult() const;
 
-            void setFileSize(const std::streampos &fileSize);
+            void setFileSize(const std::streampos &fileSiz);
         };
     }
 
