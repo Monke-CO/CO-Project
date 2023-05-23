@@ -7,6 +7,7 @@
 #include <thread>
 #include <vector>
 #include <mutex>
+#include <iostream>
 
 
 namespace benchmark::cpu{
@@ -39,9 +40,11 @@ namespace benchmark::cpu{
             result += procedure3(x, y, z);
             result += procedure4(x, y, z);
         }
+        std::cout << result;
     }
 
     void whetstoneCpuBenchmark::runMultiThreaded() {
+
         // Vector to store the threads
         std::vector<std::thread> threads;
 
@@ -54,13 +57,12 @@ namespace benchmark::cpu{
         {
             int start = i * workload;
             int end = start + workload;
-
+            double threadResult = 0.0;
             // Distribute remaining workload evenly among threads
             if (i == nrThreads - 1)
                 end += remainingWorkload;
 
-            threads[i] = std::thread([&]() {
-                double threadResult = 0.0;
+            threads.emplace_back([&]() {
                 for (int i = start; i < end; ++i)
                 {
                     threadResult += procedure1(x, y, z);
@@ -72,6 +74,7 @@ namespace benchmark::cpu{
                 // Accumulate the thread result to the shared result
                 std::lock_guard<std::mutex> lock(resultMutex);
                 result += threadResult;
+                std::cout << result;
             });
         }
 
@@ -94,19 +97,19 @@ namespace benchmark::cpu{
 
     void whetstoneCpuBenchmark::initialize(int itterations){
         this->itterations = itterations;
-        this->x = 237.236;
-        this->y = 298.976;
-        this->z = 353.235;
+        this->x = 2.236;
+        this->y = 9.976;
+        this->z = 3.235;
         this->cancel = false;
     }
 
     void whetstoneCpuBenchmark::warmup(){
         for (int i = 0; i < itterations/2; ++i)
         {
-            result += procedure1(x, y, z);
-            result += procedure2(x, y, z);
-            result += procedure3(x, y, z);
-            result += procedure4(x, y, z);
+            procedure1(x, y, z);
+            procedure2(x, y, z);
+            procedure3(x, y, z);
+            procedure4(x, y, z);
         }
     }
 

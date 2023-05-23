@@ -10,7 +10,7 @@
 namespace benchmark::cpu {
         class whetstoneCpuBenchmark {
         private:
-            int itterations;
+            long long itterations;
             double x, y, z;
             bool cancel;
             double result;

@@ -1,13 +1,16 @@
 #include "logger/Logger.h"
 #include "timer/Timer.h"
-#include "benchmark/hdd/hddReadWriteBenchmark.h"
+#include "benchmark/cpu/whetstoneCpuBenchmark.h"
 
 int main() {
     timer::Timer t1;
-    auto *hdd = new benchmark::hdd::HDDWriteSpeedBenchmark;
+    auto *cpu = new benchmark::cpu::whetstoneCpuBenchmark;
 
     t1.start();
-    hdd->run("fs", true);
+    cpu->initialize(INT32_MAX);
+    cpu->warmup();
+    cpu->setNrThreads(5);
+    cpu->runAbsolute(true);
     Logger::Info(IMPLICIT, "Finished in:", std::chrono::duration_cast<std::chrono::seconds>(t1.stop()));
 
     return 0;
