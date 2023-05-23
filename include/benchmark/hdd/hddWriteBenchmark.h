@@ -2,8 +2,8 @@
 // Created by marc on 5/15/23.
 //
 
-#ifndef CO_PROJECT_HDDREADWRITEBENCHMARK_H
-#define CO_PROJECT_HDDREADWRITEBENCHMARK_H
+#ifndef CO_PROJECT_HDDWRITEBENCHMARK_H
+#define CO_PROJECT_HDDWRITEBENCHMARK_H
 
 #include <iostream>
 #include <fstream>
@@ -29,4 +29,4 @@ namespace benchmark{
         };
     }
 }
-#endif //CO_PROJECT_HDDREADWRITEBENCHMARK_H
+#endif //CO_PROJECT_HDDWRITEBENCHMARK_H

@@ -2,7 +2,7 @@
 // Created by marc on 5/15/23.
 //
 #include "benchmark/hdd/FileWriter.h"
-#include "benchmark/hdd/hddReadWriteBenchmark.h"
+#include "benchmark/hdd/hddWriteBenchmark.h"
 
 namespace benchmark{
     namespace hdd{
