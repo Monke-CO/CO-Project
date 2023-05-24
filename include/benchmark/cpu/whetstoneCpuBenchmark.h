@@ -13,7 +13,7 @@ namespace benchmark::cpu {
         private:
             timer::Timer t2;
             std::chrono::nanoseconds time;
-            long long itterations;
+            long long iterations;
             double x, y, z;
             bool cancel;
             double result;
@@ -36,7 +36,7 @@ namespace benchmark::cpu {
 
             void runAbsolute(bool multiThreading);
 
-            void initialize(int itterations);
+            void initialize(int iterations);
 
             void setNrThreads(int nrThreads);
 

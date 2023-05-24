@@ -10,7 +10,7 @@ int main() {
     cpu->initialize(INT32_MAX);
     cpu->warmup();
     Logger::Info(IMPLICIT,"multiThreaded mode");
-    cpu->setNrThreads(5);
+    cpu->setNrThreads(1);
     cpu->runAbsolute(true);
     Logger::Info(IMPLICIT,"result: " ,cpu->getResult());
     Logger::Info(IMPLICIT, "Finished in:", std::chrono::duration_cast<std::chrono::seconds>(t1.stop()));
