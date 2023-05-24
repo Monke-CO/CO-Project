@@ -2,56 +2,30 @@
 #include "logger/Logger.h"
 #include "timer/Timer.h"
 #include "benchmark/cpu/whetstoneCpuBenchmark.h"
-#include "benchmark/hdd/hddReadBenchmark.h"
+#include "benchmark/hdd/HddReadBenchmark.h"
 #include "benchmark/cpu/CpuMatrixMultiplication.h"
 
 int main() {
     timer::Timer t1;
     // Create the benchmark object
-    auto* cpu = new bench::Cpu::CpuMatrixMultiplication();
-      cpu->setMatrixSize(2000);
-      t1.start();
-//    // Initialize the matrices with dimensions 2000x2000
-//    cpu.initialize();
-//
-//    // Run single-threaded benchmark
-//    cpu.runAbsoluteBenchmark(false);
-//    std::cout << "Result: " << cpu.getResult() << std::endl;
-//
-//    // Set the number of threads and run multi-threaded benchmark
-//    cpu.setNumThreads(2);
-//    cpu.runAbsoluteBenchmark(true);
-//    std::cout << "Result: " << cpu.getResult() << std::endl;
-//
-//    cpu.setNumThreads(4);
-//    cpu.runAbsoluteBenchmark(true);
-//    std::cout << "Result: " << cpu.getResult() << std::endl;
-//
-//    cpu.setNumThreads(8);
-//    cpu.runAbsoluteBenchmark(true);
-//    std::cout << "Result: " << cpu.getResult() << std::endl;
-//
-//    // Delay for 2 seconds
-//    std::this_thread::sleep_for(std::chrono::seconds(2));
-//
-    // Initialize and run the benchmarks again
-    cpu->initialize();
-    cpu->runAbsoluteBenchmark(false);
-    std::cout << "Result: " << cpu->getResult() << std::endl;
+    auto* benchmark = new Bench::HDD::HddReadBenchmark();
+    benchmark->setFileName("readableFile.txt");
+    t1.start();
+    // Set buffer size to 1MB
+    int bufferSize = 4096 ;// 1MB
+    benchmark->setBufferSize(bufferSize);
 
-    cpu->setNumThreads(5);
-    cpu->runAbsoluteBenchmark(true);
-    std::cout << "Result: " << cpu->getResult() << std::endl;
-//
-//    // Cancel the benchmarks
-//    cpu.cancel();
-//    cpu.runAbsoluteBenchmark(false);
-//    std::cout << "Result: " << cpu.getResult() << std::endl;
-//
-//    cpu.setNumThreads(8);
-//    cpu.runAbsoluteBenchmark(true);
-//    std::cout << "Result: " << cpu.getResult() << std::endl;
+    // Set iterations to 3
+    benchmark->setItterations(3);
 
+    // Set file size to 1GB
+    long long fileSize = 1024LL * 1024LL * 1024LL * 4LL; // 4GB
+    benchmark->initialize(fileSize);
+
+    // Run the benchmark
+    benchmark->run();
+    Logger::Info(IMPLICIT,"result = ",benchmark->getResult());
+    delete benchmark;
 
     return 0;
 }
