@@ -12,6 +12,10 @@ namespace benchmark::hdd{
         int maxIndex;
         std::string prefix;
         std::string suffix;
+        double result;
+    public:
+        double getResult() const;
+
     public:
         void warmup() override;
 

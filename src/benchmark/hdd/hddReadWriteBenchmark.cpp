@@ -13,9 +13,9 @@ namespace benchmark::hdd{
 
         try {
             if (option == "fs")
-                writer.streamWriteFixedFileSize(this->prefix, this->suffix, this->minIndex, this->maxIndex, fileSize);
+              result = writer.streamWriteFixedFileSize(this->prefix, this->suffix, this->minIndex, this->maxIndex, fileSize);
             else if (option == "fb")
-                writer.streamWriteFixedBufferSize(this->prefix, this->suffix, this->minIndex, this->maxIndex, bufferSize);
+               result = writer.streamWriteFixedBufferSize(this->prefix, this->suffix, this->minIndex, this->maxIndex, bufferSize);
             else
                 throw std::invalid_argument("Argument " + option + " is undefined");
         } catch (std::exception& e) {
@@ -53,5 +53,9 @@ namespace benchmark::hdd{
 
     void HDDWriteSpeedBenchmark::setSuffix(std::string value) {
         this->suffix = value;
+    }
+
+    double HDDWriteSpeedBenchmark::getResult() const {
+        return result;
     }
 }

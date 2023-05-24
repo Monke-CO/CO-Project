@@ -29,7 +29,7 @@ namespace benchmark {
 
         FileWriter::FileWriter() : rand_engine(rd()) {}
 
-        void FileWriter::streamWriteFixedFileSize(const std::string filePrefix, const std::string fileSuffix,
+        double FileWriter::streamWriteFixedFileSize(const std::string filePrefix, const std::string fileSuffix,
                                                   int minIndex, int maxIndex, long fileSize) {
             std::cout << "Stream write benchmark with fixed file size\n";
             int currentBufferSize = MIN_BUFFER_SIZE;
@@ -49,9 +49,10 @@ namespace benchmark {
             std::string partition = filePrefix.substr(0, partition_pos);
             std::cout << "File write score on partition " << partition << ": "
                       << std::fixed << std::setprecision(2) << benchScore << " MB/sec\n";
+            return benchScore;
         }
 
-        void FileWriter::streamWriteFixedBufferSize(const std::string filePrefix, const std::string fileSuffix,
+        double FileWriter::streamWriteFixedBufferSize(const std::string filePrefix, const std::string fileSuffix,
                                                     int minIndex, int maxIndex, int bufferSize) {
             std::cout << "Stream write benchmark with fixed buffer size\n";
             long currentFileSize = MIN_FILE_SIZE;
@@ -66,6 +67,7 @@ namespace benchmark {
             benchScore /= (maxIndex - minIndex + 1);
             std::cout << "File write score on partition: "
                       << std::fixed << std::setprecision(2) << benchScore << " MB/sec\n";
+            return benchScore;
         }
 
         void FileWriter::writeFile(const std::string fileName, int bufferSize, long fileSize) {
