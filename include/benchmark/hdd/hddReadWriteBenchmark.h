@@ -1,32 +1,35 @@
-//
-// Created by marc on 5/15/23.
-//
-
-#ifndef CO_PROJECT_HDDREADWRITEBENCHMARK_H
-#define CO_PROJECT_HDDREADWRITEBENCHMARK_H
+#pragma once
 
 #include <iostream>
 #include <fstream>
+#include "benchmark/IBenchmark.h"
 
 
-namespace benchmark{
-    namespace hdd{
-        class HDDWriteSpeedBenchmark {
-        public:
-            void initialize();
+namespace benchmark::hdd{
+    class HDDWriteSpeedBenchmark: public benchmark::IBenchmark{
+    private:
+        int minIndex;
+        int maxIndex;
+        std::string prefix;
+        std::string suffix;
+        double result;
+    public:
+        double getResult() const;
 
-            void warmUp();
+    public:
+        void warmup() override;
 
-            void run();
+        void run() override;
 
-            void run(const std::string& option, bool clean);
+        void run(const std::string& option);
 
-            void clean();
+        void cleanup() override;
 
-            void cancel();
+        void cancel() override;
 
-            std::string getResult();
-        };
-    }
+        void setMinIndex(int minIndex);
+        void setMaxIndex(int maxIndex);
+        void setPrefix(std::string prefix);
+        void setSuffix(std::string suffix);
+    };
 }
-#endif //CO_PROJECT_HDDREADWRITEBENCHMARK_H
