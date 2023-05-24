@@ -1,10 +1,4 @@
-//
-// Created by marc on 5/19/23.
-//
-
-#ifndef FILE_WRITER_H
-#define FILE_WRITER_H
-
+#pragma once
 #include <iostream>
 #include <fstream>
 #include <random>
@@ -37,17 +31,16 @@ namespace benchmark {
         public:
             FileWriter();
 
-            void streamWriteFixedFileSize(const std::string &filePrefix, const std::string &fileSuffix,
-                                          int minIndex, int maxIndex, long fileSize, bool clean);
+            double streamWriteFixedFileSize(const std::string filePrefix, const std::string fileSuffix,
+                                          int minIndex, int maxIndex, long fileSize);
 
-            void streamWriteFixedBufferSize(const std::string &filePrefix, const std::string &fileSuffix,
-                                            int minIndex, int maxIndex, int bufferSize, bool clean);
+            double streamWriteFixedBufferSize(const std::string filePrefix, const std::string fileSuffix,
+                                            int minIndex, int maxIndex, int bufferSize);
 
         private:
-            void writeFile(const std::string &fileName, int bufferSize, long fileSize, bool clean);
+            void writeFile(const std::string fileName, int bufferSize, long fileSize);
 
-            void printStats(const std::string &fileName, long totalBytes, int bufferSize);
+            void printStats(const std::string fileName, long totalBytes, int bufferSize);
         };
     }
 }
-#endif // FILE_WRITER_H
