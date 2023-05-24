@@ -1,16 +1,19 @@
 #include "logger/Logger.h"
 #include "timer/Timer.h"
-#include "benchmark/cpu/gaussLegendreCPU.h"
+#include "benchmark/cpu/whetstoneCpuBenchmark.h"
 
 int main() {
     timer::Timer t1;
-    t1.start();
-    auto *cpu = new benchmark::cpu::gaussLegendreCPU();
-    cpu->setNoDecimals(100);
-    cpu->setNoThreads(16);
-    cpu->runAbsolute(true);
+    auto *cpu = new benchmark::cpu::whetstoneCpuBenchmark;
 
-    Logger::Info(IMPLICIT, "Finished in:", t1.stop());
+    t1.start();
+    cpu->initialize(INT32_MAX);
+    cpu->warmup();
+    Logger::Info(IMPLICIT,"multiThreaded mode");
+    cpu->setNrThreads(1);
+    cpu->runAbsolute(true);
+    Logger::Info(IMPLICIT,"result: " ,cpu->getResult());
+    Logger::Info(IMPLICIT, "Finished in:", std::chrono::duration_cast<std::chrono::seconds>(t1.stop()));
 
     return 0;
 }
