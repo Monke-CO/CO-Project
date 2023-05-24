@@ -8,12 +8,12 @@ namespace Bench::HDD{
     void HddReadBenchmark::initialize(long long fileSiz)
     {
         this->fileSize = fileSiz;
-        generateFile();
     }
 
     void HddReadBenchmark::run()
     {
         for(int l = 0 ; l < itterations ; l++){
+            generateFile();
             std::ifstream file(this->fileName, std::ios::binary);
 
             long long totalBytesRead = 0;
@@ -56,6 +56,7 @@ namespace Bench::HDD{
             // Delete the file
             std::remove(this->fileName.c_str());
         }
+
     }
 
     void HddReadBenchmark::setBufferSize(int bufferSize)
@@ -75,16 +76,16 @@ namespace Bench::HDD{
 
     void HddReadBenchmark::generateFile()
     {
-        const int bufferSize = 4 * 1024 * 1024; // 4MB buffer size
-        char* buffer = new char[bufferSize];
+        const int bufferSiz = 4 * 1024 * 1024; // 4MB buffer size
+        char* buffer = new char[bufferSiz];
 
         std::ofstream file(this->fileName, std::ios::binary);
 
         long long bytesWritten = 0;
         while (bytesWritten < this->fileSize)
         {
-            file.write(buffer, bufferSize);
-            bytesWritten += bufferSize;
+            file.write(buffer, bufferSiz);
+            bytesWritten += bufferSiz;
         }
 
         file.close();
