@@ -40,7 +40,6 @@ namespace benchmark::cpu{
             result += procedure3(x, y, z);
             result += procedure4(x, y, z);
         }
-        std::cout << result;
     }
 
     void whetstoneCpuBenchmark::runMultiThreaded() {

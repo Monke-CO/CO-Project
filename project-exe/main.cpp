@@ -9,6 +9,7 @@ int main() {
     t1.start();
     cpu->initialize(INT32_MAX);
     cpu->warmup();
+    Logger::Info(IMPLICIT,"multiThreaded mode");
     cpu->setNrThreads(5);
     cpu->runAbsolute(true);
     Logger::Info(IMPLICIT,"result: " ,cpu->getResult());
