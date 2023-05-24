@@ -6,11 +6,14 @@
 #define CO_PROJECT_WHETSTONECPUBENCHMARK_H
 #include <cmath>
 #include <mutex>
+#include "timer/Timer.h"
 
 namespace benchmark::cpu {
         class whetstoneCpuBenchmark {
         private:
-            long long itterations;
+            timer::Timer t2;
+            std::chrono::nanoseconds time;
+            long long iterations;
             double x, y, z;
             bool cancel;
             double result;
@@ -33,7 +36,7 @@ namespace benchmark::cpu {
 
             void runAbsolute(bool multiThreading);
 
-            void initialize(int itterations);
+            void initialize(int iterations);
 
             void setNrThreads(int nrThreads);
 

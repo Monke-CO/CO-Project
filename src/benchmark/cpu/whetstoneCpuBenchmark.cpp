@@ -33,49 +33,51 @@ namespace benchmark::cpu{
     }
 
     void whetstoneCpuBenchmark::run(){
-        for (int i = 0; i < itterations; ++i)
+        for (int i = 0; i < iterations; ++i)
         {
             result += procedure1(x, y, z);
             result += procedure2(x, y, z);
             result += procedure3(x, y, z);
             result += procedure4(x, y, z);
         }
-        std::cout << result;
     }
 
     void whetstoneCpuBenchmark::runMultiThreaded() {
-
         // Vector to store the threads
         std::vector<std::thread> threads;
 
+        // Create a lambda function to execute the benchmark for a given range of iterations
+        auto benchmarkFunc = [&](int start, int end) {
+            double threadResult = 0.0;
+            for (int i = start; i < end; ++i)
+            {
+                threadResult += procedure1(x, y, z);
+                threadResult += procedure2(x, y, z);
+                threadResult += procedure3(x, y, z);
+                threadResult += procedure4(x, y, z);
+            }
+
+            // Accumulate the thread result to the shared result
+            {
+                std::lock_guard<std::mutex> lock(resultMutex);
+                result += threadResult;
+            }
+        };
+
         // Calculate the workload for each thread
-        int workload = itterations / nrThreads;
-        int remainingWorkload = itterations % nrThreads;
+        int workload = iterations / nrThreads;
+        int remainingWorkload = iterations % nrThreads;
 
         // Launch the threads
         for (int i = 0; i < nrThreads; ++i)
         {
             int start = i * workload;
             int end = start + workload;
-            double threadResult = 0.0;
             // Distribute remaining workload evenly among threads
             if (i == nrThreads - 1)
                 end += remainingWorkload;
 
-            threads.emplace_back([&]() {
-                for (int i = start; i < end; ++i)
-                {
-                    threadResult += procedure1(x, y, z);
-                    threadResult += procedure2(x, y, z);
-                    threadResult += procedure3(x, y, z);
-                    threadResult += procedure4(x, y, z);
-                }
-
-                // Accumulate the thread result to the shared result
-                std::lock_guard<std::mutex> lock(resultMutex);
-                result += threadResult;
-                std::cout << result;
-            });
+            threads.emplace_back(benchmarkFunc, start, end);
         }
 
         // Wait for all threads to finish
@@ -87,16 +89,18 @@ namespace benchmark::cpu{
     }
 
     void whetstoneCpuBenchmark::runAbsolute(bool multiThreading) {
+        this->t2.start();
         if(multiThreading){
             runMultiThreaded();
         }
         else{
             run();
         }
+        this->time = this->t2.stop();
     }
 
-    void whetstoneCpuBenchmark::initialize(int itterations){
-        this->itterations = itterations;
+    void whetstoneCpuBenchmark::initialize(int iterations){
+        this->iterations = iterations;
         this->x = 2.236;
         this->y = 9.976;
         this->z = 3.235;
@@ -104,7 +108,7 @@ namespace benchmark::cpu{
     }
 
     void whetstoneCpuBenchmark::warmup(){
-        for (int i = 0; i < itterations/2; ++i)
+        for (int i = 0; i < iterations / 2; ++i)
         {
             procedure1(x, y, z);
             procedure2(x, y, z);
@@ -114,6 +118,8 @@ namespace benchmark::cpu{
     }
 
     double whetstoneCpuBenchmark::getResult(){
+        result = (iterations) / std::chrono::duration_cast<std::chrono::milliseconds>(time).count();
+        result /= 1000;
         return this->result;
     }
 

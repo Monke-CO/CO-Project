@@ -27,7 +27,5 @@ int main() {
     Logger::Info(IMPLICIT,"result = ",benchmark->getResult());
     delete benchmark;
 
-    Logger::Info(IMPLICIT, "Finished in:", std::chrono::duration_cast<std::chrono::seconds>(t1.stop()));
-
     return 0;
 }

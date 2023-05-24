@@ -1,34 +1,23 @@
-//
-// Created by marc on 5/10/23.
-//
+#pragma once
 
-#ifndef CO_PROJECT_FIXEDPOINTBENCHMARK_H
-#define CO_PROJECT_FIXEDPOINTBENCHMARK_H
+namespace benchmark::cpu {
+    class fixedPointBenchmark {
+    private:
+        int size = 1024;
+        bool cancel = false;
+    public:
+        void warmup();
 
-namespace BenchMark::Cpu {
-        class fixedPointBenchmark {
-        private:
-            int size;
-            bool cancel;
-        public:
-            void Cancel(bool cance);
+        void run();
 
-            void Warmup();
+        void setSize(int siz);
 
-            void Run();
+        void integerArithmeticTest() const;
 
-            void SetSize(int siz);
+        void branchingTest() const;
 
-            void IntegerArithmeticTest();
+        void arrayAccessTest() const;
 
-            void BranchingTest();
-
-            void ArrayAccessTest();
-
-            void GetResult();
-        };
-        //namespace cpu
-    }
-
-
-#endif //CO_PROJECT_FIXEDPOINTBENCHMARK_H
+        void getResult();
+    };
+}
