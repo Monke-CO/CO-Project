@@ -39,7 +39,7 @@ int main() {
     cpu->runAbsoluteBenchmark(false);
     std::cout << "Result: " << cpu->getResult() << std::endl;
 
-    cpu->setNumThreads(4);
+    cpu->setNumThreads(5);
     cpu->runAbsoluteBenchmark(true);
     std::cout << "Result: " << cpu->getResult() << std::endl;
 //
