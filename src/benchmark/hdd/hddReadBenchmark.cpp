@@ -69,6 +69,7 @@ namespace Bench::HDD{
         else{
             readSpeed = (static_cast<double > (this->fileSize)*10) / (duration/ 100) / (1024 * 1024);
         }
+        this->result = readSpeed;
         std::cout << "Read speed: " << readSpeed << " MB/s" << std::endl;
 
         file.close();
