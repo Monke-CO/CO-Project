@@ -11,6 +11,7 @@ int main() {
     cpu->warmup();
     cpu->setNrThreads(5);
     cpu->runAbsolute(true);
+    Logger::Info(IMPLICIT,"result: " ,cpu->getResult());
     Logger::Info(IMPLICIT, "Finished in:", std::chrono::duration_cast<std::chrono::seconds>(t1.stop()));
 
     return 0;

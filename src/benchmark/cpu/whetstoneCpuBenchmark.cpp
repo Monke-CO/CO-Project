@@ -74,7 +74,6 @@ namespace benchmark::cpu{
                 // Accumulate the thread result to the shared result
                 std::lock_guard<std::mutex> lock(resultMutex);
                 result += threadResult;
-                std::cout << result;
             });
         }
 
@@ -87,12 +86,14 @@ namespace benchmark::cpu{
     }
 
     void whetstoneCpuBenchmark::runAbsolute(bool multiThreading) {
+        this->t2.start();
         if(multiThreading){
             runMultiThreaded();
         }
         else{
             run();
         }
+        this->time = this->t2.stop();
     }
 
     void whetstoneCpuBenchmark::initialize(int itterations){
@@ -114,6 +115,9 @@ namespace benchmark::cpu{
     }
 
     double whetstoneCpuBenchmark::getResult(){
+        result /=(itterations);
+        result =result / std::chrono::duration_cast<std::chrono::seconds>(time).count();
+        result *= 100;
         return this->result;
     }
 
