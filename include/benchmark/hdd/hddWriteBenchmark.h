@@ -13,8 +13,6 @@ namespace benchmark::hdd{
         std::string prefix;
         std::string suffix;
         double result;
-    public:
-        double getResult() const;
 
     public:
         void warmup() override;
@@ -27,7 +25,8 @@ namespace benchmark::hdd{
 
         void cancel() override;
 
-        std::string getResult();
+        double getResult() const;
+
         void setMinIndex(int minIndex);
         void setMaxIndex(int maxIndex);
         void setPrefix(std::string prefix);
