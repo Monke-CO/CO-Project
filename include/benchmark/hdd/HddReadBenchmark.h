@@ -14,20 +14,27 @@
 namespace Bench::HDD {
 
     class HddReadBenchmark {
-    public:
-        HddReadBenchmark();
-        void initialize(long long fileSiz);
-        void run();
-        void setBufferSize(int bufferSize);
-        void setFileName(const std::string& fileName);
-        void cancel();
-
     private:
         bool isCancelled;
         std::string fileName;
         long long fileSize;
         int bufferSize;
+        int itterations;
+        double result;
 
+    public:
+        HddReadBenchmark();
+        void initialize(long long fileSiz);
+        void run();
+        void setBufferSize(int bufferSize);
+
+        double getResult();
+
+        void setFileName(const std::string& fileName);
+        void cancel();
+        void setItterations(int iterations);
+
+    private:
         void generateFile();
     };
 

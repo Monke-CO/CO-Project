@@ -13,41 +13,49 @@ namespace Bench::HDD{
 
     void HddReadBenchmark::run()
     {
-        std::ifstream file(this->fileName, std::ios::binary);
+        for(int l = 0 ; l < itterations ; l++){
+            std::ifstream file(this->fileName, std::ios::binary);
 
-        long long totalBytesRead = 0;
-        char* buffer = new char[this->bufferSize];
+            long long totalBytesRead = 0;
+            char* buffer = new char[this->bufferSize];
 
-        auto startTime = std::chrono::high_resolution_clock::now();
+            auto startTime = std::chrono::high_resolution_clock::now();
 
-        while (file && !this->isCancelled)
-        {
-            file.read(buffer, this->bufferSize);
-            totalBytesRead += file.gcount();
-        }
+            while (file && !this->isCancelled)
+            {
+                file.read(buffer, this->bufferSize);
+                totalBytesRead += file.gcount();
+            }
 
-        auto endTime = std::chrono::high_resolution_clock::now();
-        auto duration = std::chrono::duration_cast<std::chrono::duration<double>>(endTime - startTime);
+            auto endTime = std::chrono::high_resolution_clock::now();
+            auto duration = std::chrono::duration_cast<std::chrono::duration<double>>(endTime - startTime);
 
-        file.close();
+            file.close();
 
-        delete[] buffer;
+            delete[] buffer;
 
-        std::cout << "Total bytes read: " << totalBytesRead << " bytes" << std::endl;
+            std::cout << "Total bytes read: " << totalBytesRead << " bytes" << std::endl;
 
-        if (duration.count() < 1.0)
-        {
-            std::cout << "Elapsed time: " << duration.count() * 1000.0 << " milliseconds" << std::endl;
-            std::cout << "Transfer rate: " << (totalBytesRead / (1024.0 * 1024.0 * 1024.0)) / duration.count() << " GB/s" << std::endl;
-        }
-        else
-        {
+            double transferRate;
+            std::string transferRateUnit;
+
+            if (duration.count() < 1.0)
+            {
+                transferRate = totalBytesRead / duration.count()/(1024.0*1024.0);
+                transferRateUnit = "B/s";
+            }
+            else
+            {
+                transferRate = (totalBytesRead / duration.count()) / (1024.0 * 1024.0);
+                transferRateUnit = "MB/s";
+            }
+
             std::cout << "Elapsed time: " << duration.count() << " seconds" << std::endl;
-            std::cout << "Transfer rate: " << (totalBytesRead / (1024.0 * 1024.0)) / duration.count() << " MB/s" << std::endl;
+            std::cout << "Transfer rate: " << transferRate << " " << transferRateUnit << std::endl;
+            result+=transferRate;
+            // Delete the file
+            std::remove(this->fileName.c_str());
         }
-
-        // Delete the file
-        std::remove(this->fileName.c_str());
     }
 
     void HddReadBenchmark::setBufferSize(int bufferSize)
@@ -82,6 +90,15 @@ namespace Bench::HDD{
         file.close();
 
         delete[] buffer;
+    }
+
+    void HddReadBenchmark::setItterations(int iterations) {
+        HddReadBenchmark::itterations = iterations;
+    }
+
+    double HddReadBenchmark::getResult() {
+        result /= itterations;
+        return result;
     }
 
 }
