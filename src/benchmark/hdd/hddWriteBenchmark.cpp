@@ -1,5 +1,5 @@
 #include "benchmark/hdd/FileWriter.h"
-#include "benchmark/hdd/hddReadWriteBenchmark.h"
+#include "benchmark/hdd/hddWriteBenchmark.h"
 
 namespace benchmark::hdd{
     void HDDWriteSpeedBenchmark::run() {
